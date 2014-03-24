@@ -1,4 +1,4 @@
-package com.kptech.extrakt.core;
+package com.gervasiocaj.extrakt.core;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.kptech.extrakt.core;
+package com.gervasiocaj.extrakt.core;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

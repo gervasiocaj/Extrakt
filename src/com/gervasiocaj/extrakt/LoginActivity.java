@@ -1,6 +1,6 @@
-package com.kptech.extrakt;
+package com.gervasiocaj.extrakt;
 
-import com.kptech.extrakt.core.Auth;
+import com.gervasiocaj.extrakt.core.Auth;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
