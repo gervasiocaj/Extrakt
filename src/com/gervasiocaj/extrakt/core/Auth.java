@@ -3,6 +3,10 @@ package com.gervasiocaj.extrakt.core;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.json.simple.JSONValue;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,11 +23,10 @@ public class Auth {
 		String hash = hashPass(pass);
 		hashed = !hash.isEmpty();
 		
-		if (hashed)
-			logged = JsonTalker.login(username, hash);
+		saved = saveCredentials(con, username, hash);
 		
-		if (logged)
-			saved = saveCredentials(con, username, hash);
+		if (hashed)
+			logged = JSONTalker.login(con);
 		
 		Log.d("auth", "hash: " + hash);
 		Log.d("auth", "login: " + (logged ? "sucessful" : "fail"));
@@ -45,6 +48,10 @@ public class Auth {
 		
 		return result;
 	}
+	
+	public static SharedPreferences getSharedPrefs(Context context) {
+		return context.getSharedPreferences("ExtraktPrefs", 0);
+	}
 
 	private static boolean saveCredentials(Context con, String username, String hashedPass) {
 		// ref: http://developer.android.com/guide/topics/data/data-storage.html
@@ -55,8 +62,12 @@ public class Auth {
 		return editor.commit();
 	}
 
-	public static SharedPreferences getSharedPrefs(Context context) {
-		return context.getSharedPreferences("ExtraktPrefs", 0);
+	public static String getJSONCredentials(Context context) {
+		// ref: https://code.google.com/p/json-simple/wiki/EncodingExamples
+		Map<String, String> requestObject = new LinkedHashMap<String, String>();
+		requestObject.put("username", getSharedPrefs(context).getString("username", ""));
+		requestObject.put("password", getSharedPrefs(context).getString("pass", ""));
+		return JSONValue.toJSONString(requestObject);
 	}
 	
 	public static String toHexString(byte[] array) {

@@ -1,13 +1,19 @@
 package com.gervasiocaj.extrakt;
 
+import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
+
+import com.gervasiocaj.extrakt.core.element.*;
+
 import android.app.Activity;
-import android.content.Intent;
+import android.content.*;
 import android.support.v7.app.*;
 import android.support.v4.app.*;
-import android.os.Bundle;
+import android.os.*;
+import android.util.Log;
 import android.view.*;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -51,10 +57,10 @@ public class MainActivity extends ActionBarActivity implements
 	public void onSectionAttached(int number) {
 		switch (number) {
 		case 1:
-			mTitle = getString(R.string.title_tvshows);
+			mTitle = getString(R.string.title_movies);
 			break;
 		case 2:
-			mTitle = getString(R.string.title_movies);
+			mTitle = getString(R.string.title_tvshows);
 			break;
 		}
 	}
@@ -124,10 +130,54 @@ public class MainActivity extends ActionBarActivity implements
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_main, container,
 					false); // TODO change textview to list
-			TextView textView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			textView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+			
+			GridView gridView = (GridView) rootView.findViewById(R.id.gridView1);
+			final Context con = container.getContext();
+
+
+			AsyncTask<Class,Void,ListAdapter> myTask = new AsyncTask<Class, Void, ListAdapter>() {
+
+				@Override
+				protected ListAdapter doInBackground(Class... params) {
+					ListAdapter result = null;
+					// TODO Auto-generated method stub
+					if (params[0] == Movie.class)
+						result = new MovieAdapter(con, com.gervasiocaj.extrakt.core.JSONParser.getMovieRecomendations(con));
+					else if (params[0] == TVShow.class)
+						result = new ShowAdapter(con,  new LinkedList<TVShow>());
+					Log.d("mainActivity", "finishing fill screen");
+					return result;
+				}
+
+			};
+
+			Class classType = null;
+			switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
+			case 1:
+				classType = Movie.class;
+				break;
+			case 2:
+				classType = TVShow.class;
+				break;
+			default:
+				classType = TVShow.class;
+				break;
+			} // TODO add more views
+			
+			ListAdapter adapter = null;
+			
+			try {
+				Log.d("mainActivity", "before fill screen");
+				adapter = myTask.execute(classType).get();
+			} catch (InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			}
+			
+			Log.d("mainActivity", "set screen adapter: " + (adapter == null ? "null" : adapter));
+			gridView.setAdapter(adapter);
+			
+			//TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+			//textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
 			return rootView;
 		}
 

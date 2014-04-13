@@ -184,18 +184,8 @@ public class LoginActivity extends Activity {
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
-			
-			boolean logged = false; 
-			
-			try {
-				// Simulate network access.
-				logged = Auth.login(getApplicationContext(), mEmail, mPassword);
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-			}
-			
-			return logged;
+			return Auth.login(getApplicationContext(), mEmail, mPassword); //network access
+			// Thread.sleep(1000);
 		}
 
 		@Override
@@ -206,7 +196,7 @@ public class LoginActivity extends Activity {
 			if (success) {
 				finish();
 			} else {
-				mPasswordView.setError(getString(R.string.error_incorrect_password));
+				mPasswordView.setError(getString(R.string.error_login));
 				mPasswordView.requestFocus();
 			}
 		}
