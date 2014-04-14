@@ -8,39 +8,47 @@ import org.json.simple.JSONObject;
 
 import android.content.Context;
 
+import com.gervasiocaj.extrakt.core.element.Content;
 import com.gervasiocaj.extrakt.core.element.Movie;
+import com.gervasiocaj.extrakt.core.element.TVShow;
 
 public class JSONParser {
 	
-	public static List<Movie> getMovieRecomendations(Context context) {
-		List<Movie> result = new LinkedList<Movie>();
-		JSONArray list = JSONTalker.fillMovieRecomendations(context), tempGenres;
-		JSONObject temp, tempImage;
-		Movie movie;
+	public static List<Content> getContentRecomendations(Context context, boolean isMovie) {
+		List<Content> result = new LinkedList<Content>();
+		JSONArray list = JSONTalker.fillContentRecomendations(context, isMovie), tempGenres;
+		JSONObject temp, tempImages;
+		Content content;
 		
 		for (int i = 0; i < list.size(); i++) {
 			temp = (JSONObject) list.get(i);
 			
-			movie = new Movie();
-			movie.title = (String) temp.get("title");
-			movie.year = (long) temp.get("year");
-			movie.released = (long) temp.get("released");
-			movie.url = (String) temp.get("url");
-			movie.runtime = (long) temp.get("runtime");
-			movie.overview = (String) temp.get("overview");
+			if (isMovie) {
+				content = new Movie();
+				((Movie) content).released = (long) temp.get("released");
+			} else {
+				content = new TVShow();
+				((TVShow) content).first_aired = (long) temp.get("first_aired");
+			}
 			
-			tempImage = (JSONObject) temp.get("images");
-			movie.poster = (String) tempImage.get("poster");
-			movie.fanart = (String) tempImage.get("fanart");
+			content.title = (String) temp.get("title");
+			content.year = (long) temp.get("year");
+			content.url = (String) temp.get("url");
+			content.runtime = (long) temp.get("runtime");
+			content.overview = (String) temp.get("overview");
+			
+			tempImages = (JSONObject) temp.get("images");
+			content.poster = (String) tempImages.get("poster");
+			content.fanart = (String) tempImages.get("fanart");
 			
 			int x = 0;
 			tempGenres =  (JSONArray) temp.get("genres");
-			movie.genres = new String[tempGenres.size()];
+			content.genres = new String[tempGenres.size()];
 			for (Object string : tempGenres)
-				movie.genres[x++] = (String) string;
+				content.genres[x++] = (String) string;
 			
 			//movie.downloadImg(context.getResources()); // XXX download in paralell
-			result.add(movie);
+			result.add(content);
 		}
 		
 		return result;

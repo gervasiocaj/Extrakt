@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 
-import com.gervasiocaj.extrakt.core.element.Movie;
+import com.gervasiocaj.extrakt.core.element.Content;
 
 import android.content.*;
 import android.graphics.drawable.BitmapDrawable;
@@ -15,11 +15,11 @@ import android.util.Log;
 import android.view.*;
 import android.widget.*;
 
-public class MovieAdapter extends ArrayAdapter<Movie> {
+public class ContentAdapter extends ArrayAdapter<Content> {
 
 	private Context context;
 
-	public MovieAdapter(Context context, List<Movie> objects) {
+	public ContentAdapter(Context context, List<Content> objects) {
 		super(context, R.layout.single_element_view, objects);
 		this.context = context; 
 	}
@@ -35,7 +35,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 		ImageView image = (ImageView) rowView.findViewById(R.id.imageView1);
 		TextView text = (TextView) rowView.findViewById(R.id.textView1);
 		
-		Movie current = (Movie) getItem(position);
+		Content current = (Content) getItem(position);
 		
 		text.setText(current.title);
 		image.setTag(current);
@@ -54,7 +54,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 			// ref: http://stackoverflow.com/questions/2471935/how-to-load-an-imageview-by-url-in-android
 			// ref: http://stackoverflow.com/questions/3375166/android-drawable-images-from-url
 			imgView = params[0];
-			Movie current = (Movie) imgView.getTag();
+			Content current = (Content) imgView.getTag();
 			
 			if (current.posterImg != null)
 				return current.posterImg;

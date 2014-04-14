@@ -47,11 +47,11 @@ public class JSONTalker {
 		return logged;
 	}
 	
-	public static JSONArray fillMovieRecomendations(Context context) {
+	public static JSONArray fillContentRecomendations(Context context, boolean isMovie) {
 		
 		//TODO
 		try {
-			HttpPost post = new HttpPost("http://api.trakt.tv/recommendations/movies/" + apiKey);
+			HttpPost post = new HttpPost("http://api.trakt.tv/recommendations/" + (isMovie ? "movies/" : "shows/") + apiKey);
 			post.setEntity(new StringEntity(Auth.getJSONCredentials(context)));
 			HttpResponse response = new DefaultHttpClient().execute(post);
 			

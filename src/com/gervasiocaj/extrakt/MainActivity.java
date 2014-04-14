@@ -1,6 +1,5 @@
 package com.gervasiocaj.extrakt;
 
-import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
 
 import com.gervasiocaj.extrakt.core.element.*;
@@ -139,14 +138,13 @@ public class MainActivity extends ActionBarActivity implements
 
 				@Override
 				protected ListAdapter doInBackground(Class... params) {
-					ListAdapter result = null;
-					// TODO Auto-generated method stub
+					boolean isMovie = false;
+					
 					if (params[0] == Movie.class)
-						result = new MovieAdapter(con, com.gervasiocaj.extrakt.core.JSONParser.getMovieRecomendations(con));
-					else if (params[0] == TVShow.class)
-						result = new ShowAdapter(con,  new LinkedList<TVShow>());
-					Log.d("mainActivity", "finishing fill screen");
-					return result;
+						isMovie = true;
+					
+					Log.d("mainActivity", "finishing fill screen with " + (isMovie ? "movies" : "shows"));
+					return new ContentAdapter(con, com.gervasiocaj.extrakt.core.JSONParser.getContentRecomendations(con, isMovie));
 				}
 
 			};
