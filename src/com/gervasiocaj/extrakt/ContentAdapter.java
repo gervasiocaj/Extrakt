@@ -1,7 +1,6 @@
 package com.gervasiocaj.extrakt;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.List;
 
@@ -60,14 +59,41 @@ public class ContentAdapter extends ArrayAdapter<Content> {
 				return current.posterImg;
 			
 			InputStream in;
-
+			FileOutputStream out;
+			String name = current.imdb_id + "_poster.jpg";
+			FileInputStream posterFile = null;
+			
 			try {
-				Log.i("downloadAsync", "downloading image for: " + current.title);
-				in = new URL(current.poster).openStream();
-				current.posterImg = new BitmapDrawable(imgView.getResources(), in);
-			} catch (IOException e) {
-				Log.e("downloadAsync", "failed to download image for " + current.title);
+				posterFile = context.openFileInput(name);
+				Log.i(getClass().getSimpleName(), "found image for: " + current.title);
+			} catch (FileNotFoundException e1) {
+				try {
+					Log.i(getClass().getSimpleName(), "file not found, downloading image for: " + current.title);
+					in = new URL(current.poster).openStream();
+					out = context.openFileOutput(name, Context.MODE_PRIVATE);
+					
+					while (in.available()>0)
+						out.write(in.read());
+					
+					in.close();
+					out.close();
+				} catch (IOException e) {
+					Log.e(getClass().getSimpleName(), "failed to download image for " + current.title);
+				}
 			}
+			
+			try {
+				posterFile = context.openFileInput(name);
+				current.posterImg = new BitmapDrawable(imgView.getResources(), posterFile);
+			} catch (FileNotFoundException e) {
+			}
+			
+			if (current.posterImg.getIntrinsicWidth() < 10) {
+				Log.d(getClass().getSimpleName(), "image probably corrupted");
+				current.posterImg = null;
+				context.deleteFile(name);
+			}
+			
 			return current.posterImg;
 		}
 		

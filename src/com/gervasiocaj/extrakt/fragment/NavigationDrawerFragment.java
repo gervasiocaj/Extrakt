@@ -1,4 +1,6 @@
-package com.gervasiocaj.extrakt;
+package com.gervasiocaj.extrakt.fragment;
+
+import com.gervasiocaj.extrakt.R;
 
 import android.app.Activity;
 import android.support.v4.app.*;
@@ -48,6 +50,8 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+	private String[] drawerLabels;
+
     public NavigationDrawerFragment() {
     }
 
@@ -67,6 +71,11 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
+        drawerLabels = new String[]{
+                getString(R.string.title_movies),
+                getString(R.string.title_tvshows),
+                getString(R.string.progress),
+        };
     }
 
     @Override
@@ -91,10 +100,7 @@ public class NavigationDrawerFragment extends Fragment {
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_movies),
-                        getString(R.string.title_tvshows),
-                }));
+                drawerLabels));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -188,6 +194,10 @@ public class NavigationDrawerFragment extends Fragment {
         if (mCallbacks != null) {
             mCallbacks.onNavigationDrawerItemSelected(position);
         }
+    }
+    
+    public String getItemLabel(int position) {
+    	return drawerLabels[position-1];
     }
 
     @Override

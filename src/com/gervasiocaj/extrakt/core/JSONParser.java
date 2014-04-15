@@ -36,6 +36,7 @@ public class JSONParser {
 			content.url = (String) temp.get("url");
 			content.runtime = (long) temp.get("runtime");
 			content.overview = (String) temp.get("overview");
+			content.imdb_id = (String) temp.get("imdb_id");
 			
 			tempImages = (JSONObject) temp.get("images");
 			content.poster = (String) tempImages.get("poster");
@@ -47,7 +48,7 @@ public class JSONParser {
 			for (Object string : tempGenres)
 				content.genres[x++] = (String) string;
 			
-			//movie.downloadImg(context.getResources()); // XXX download in paralell
+			//movie.downloadImg(context.getResources()); // download in paralell
 			result.add(content);
 		}
 		

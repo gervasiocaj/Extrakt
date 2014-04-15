@@ -72,7 +72,7 @@ public class LoginActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						Log.e("loginactiv", "attempt");
+						Log.e(getClass().getSimpleName(), "attempt");
 						attemptLogin();
 					}
 				});
