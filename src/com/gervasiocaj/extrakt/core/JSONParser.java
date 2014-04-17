@@ -54,5 +54,43 @@ public class JSONParser {
 		
 		return result;
 	}
+	
+	public static List<TVShow> getTVShowProgress(Context context) {
+		List<TVShow> result = new LinkedList<TVShow>();
+		JSONArray obj = JSONTalker.fillTVShowProgress(context);
+		JSONObject elementTemp, showTemp, progressTemp, tempImages;
+		TVShow show;
+		
+		//int size = obj.entrySet().size();
+		
+		for (int i = 0; i < obj.size(); i++) {
+			elementTemp = (JSONObject) obj.get(i);
+			showTemp = (JSONObject) elementTemp.get("show");
+			progressTemp = (JSONObject) elementTemp.get("progress");
+			
+			//Object epi = elementTemp.get("next_episode");
+			//if (epi instanceof Boolean);
+			//episodeTemp = null;
+			//else
+			//	episodeTemp = (JSONObject) elementTemp.get("next_episode");
+			
+			show = new TVShow();
+			show.title = (String) showTemp.get("title");
+			show.imdb_id = (String) showTemp.get("imdb_id");
+			
+			tempImages = (JSONObject) showTemp.get("images");
+			show.poster = (String) tempImages.get("poster");
+			show.fanart = (String) tempImages.get("fanart");
+			
+			//progressTemp 
+			show.completed = (long) progressTemp.get("percentage");
+			
+			result.add(show);
+		}
+		
+		
+		
+		return result;
+	}
 
 }

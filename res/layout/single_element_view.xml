@@ -5,14 +5,14 @@
     android:gravity="center">
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/movie_image"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
         android:contentDescription="@string/element_poster"
         android:src="@drawable/abc_ic_clear" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/movie_title"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:gravity="center"

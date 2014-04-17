@@ -31,6 +31,13 @@
 
     <!-- Login form -->
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="You must provide valid trakt.tv credentials to login"
+        android:textSize="18dp" />
+
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"

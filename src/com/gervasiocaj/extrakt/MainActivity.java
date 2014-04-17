@@ -76,6 +76,15 @@ public class MainActivity extends ActionBarActivity implements
 			// if the drawer is not showing. Otherwise, let the drawer
 			// decide what to show in the action bar.
 			getMenuInflater().inflate(R.menu.main, menu);
+			// ref: http://developer.android.com/guide/topics/search/search-dialog.html
+			
+			//SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+			//SearchView searchView = (SearchView) menu.findItem(R.id.action_example).getActionView();
+			
+			//searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+		    //searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+			
 			restoreActionBar();
 			return true;
 		}

@@ -45,6 +45,8 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
+		
+		mEmail = Auth.getSharedPrefs(getApplicationContext()).getString("username", "");
 
 		// Set up the login form.
 		mEmailView = (EditText) findViewById(R.id.username);

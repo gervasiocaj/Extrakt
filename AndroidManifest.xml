@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
     
     <uses-permission 
@@ -28,8 +28,9 @@
         <activity
             android:name="com.gervasiocaj.extrakt.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateVisible" />
+        <activity 
+            android:name="com.gervasiocaj.extrakt.ContentDetailsActivity" />
     </application>
 
 </manifest>

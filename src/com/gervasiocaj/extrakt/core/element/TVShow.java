@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class TVShow extends Content {
 	
     public long first_aired;
+	public long completed;
 
 	@Override
 	public String toString() {
