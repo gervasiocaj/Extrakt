@@ -44,6 +44,6 @@
         android:layout_alignBottom="@+id/show_next"
         android:layout_alignParentRight="true"
         android:layout_marginRight="40dp"
-        android:text="@string/_seen" />
+        android:text="@string/seen_button" />
 
 </RelativeLayout>

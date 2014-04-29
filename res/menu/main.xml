@@ -7,13 +7,6 @@
         android:id="@+id/action_login"
         android:title="@string/action_login"/>
     <item
-        android:id="@+id/action_search"
-        android:actionViewClass="com.actionbarsherlock.widget.SearchView"
-        android:icon="@drawable/ic_action_search"
-        android:orderInCategory="5"
-        android:showAsAction="ifRoom|collapseActionView"
-        android:title="@string/action_search"/>
-    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
